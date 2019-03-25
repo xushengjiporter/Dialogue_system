@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>聊天窗口</title>
+    <link rel="stylesheet" type="text/css" href="static/css/mui.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/mui.imageviewer.css">
+    <link rel="stylesheet" type="text/css" href="static/css/chat-im.css">
+</head>
+
+<body contextmenu="return false;">
+    <!--<header><div  style="text-align:center;font-size:22px;">海信智能客服系统</div></header>-->
+    <!-- 聊天内容列表 -->
+    <div class="im-chat-main">
+        <ul id="msg_list">
+                        <li>
+                <div class="im-chat-user">
+                    <img src="static/images/海信.png"/>
+                    <cite>海信客服</cite>
+                </div>
+                <div class="im-chat-text">您好，我是海信客服，请问有什么可以帮您的？</div>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- 底部 -->
+    <footer>
+        <div class="footer-left">
+            <i class="mui-icon chat-icon chat-icon-voice"></i>
+        </div>
+        <div class="footer-center">
+            <textarea id="msg_text" type="text" class="input-text"></textarea>
+            <div class="mui-btn mui-btn-outlined voice-btn">按住 说话</div>
+        </div>
+        <div class="footer-right">
+            <i class="mui-icon chat-icon chat-icon-face" style="margin-right: 0.2rem; padding-left: 10px;"></i>
+            <i class="mui-icon chat-icon chat-icon-add-more" style="width: 46px;"></i>
+            <div class="mui-btn mui-btn-success mui-hidden" id="sendMessage">发送</div>
+        </div>
+    </footer>
+    
+    <!--表情内容-->
+    <div id="face-content" class="mui-content face-content">
+        <div id="Gallery" class="mui-slider">
+            <div class="mui-slider-group">
+                <div class="mui-slider-item">
+                    <ul class="clear face-list">
+                        <li title="[微笑]"><img src="static/images/face/0.gif"></li>
+                        <li title="[嘻嘻]"><img src="static/images/face/1.gif"></li>
+                        <li title="[哈哈]"><img src="static/images/face/2.gif"></li>
+                        <li title="[可爱]"><img src="static/images/face/3.gif"></li>
+                        <li title="[可怜]"><img src="static/images/face/4.gif"></li>
+                        <li title="[挖鼻]"><img src="static/images/face/5.gif"></li>
+                        <li title="[吃惊]"><img src="static/images/face/6.gif"></li>
+                        <li title="[害羞]"><img src="static/images/face/7.gif"></li>
+                        <li title="[挤眼]"><img src="static/images/face/8.gif"></li>
+                        <li title="[闭嘴]"><img src="static/images/face/9.gif"></li>
+                        <li title="[鄙视]"><img src="static/images/face/10.gif"></li>
+                        <li title="[爱你]"><img src="static/images/face/11.gif"></li>
+                        <li title="[泪]"><img src="static/images/face/12.gif"></li>
+                        <li title="[偷笑]"><img src="static/images/face/13.gif"></li>
+                        <li title="[亲亲]"><img src="static/images/face/14.gif"></li>
+                        <li title="[生病]"><img src="static/images/face/15.gif"></li>
+                        <li title="[太开心]"><img src="static/images/face/16.gif"></li>
+                        <li title="[白眼]"><img src="static/images/face/17.gif"></li>
+                        <li title="[右哼哼]"><img src="static/images/face/18.gif"></li>
+                        <li title="[左哼哼]"><img src="static/images/face/19.gif"></li>
+                        <li title="[嘘]"><img src="static/images/face/20.gif"></li>
+                    </ul>
+                </div>
+                <div class="mui-slider-item">
+                    <ul class="clear face-list">
+                        <li title="[衰]"><img src="static/images/face/21.gif"></li>
+                        <li title="[委屈]"><img src="static/images/face/22.gif"></li>
+                        <li title="[吐]"><img src="static/images/face/23.gif"></li>
+                        <li title="[哈欠]"><img src="static/images/face/24.gif"></li>
+                        <li title="[抱抱]"><img src="static/images/face/25.gif"></li>
+                        <li title="[怒]"><img src="static/images/face/26.gif"></li>
+                        <li title="[疑问]"><img src="static/images/face/27.gif"></li>
+                        <li title="[馋嘴]"><img src="static/images/face/28.gif"></li>
+                        <li title="[拜拜]"><img src="static/images/face/29.gif"></li>
+                        <li title="[思考]"><img src="static/images/face/30.gif"></li>
+                        <li title="[汗]"><img src="static/images/face/31.gif"></li>
+                        <li title="[困]"><img src="static/images/face/32.gif"></li>
+                        <li title="[睡]"><img src="static/images/face/33.gif"></li>
+                        <li title="[钱]"><img src="static/images/face/34.gif"></li>
+                        <li title="[失望]"><img src="static/images/face/35.gif"></li>
+                        <li title="[酷]"><img src="static/images/face/36.gif"></li>
+                        <li title="[色]"><img src="static/images/face/37.gif"></li>
+                        <li title="[哼]"><img src="static/images/face/38.gif"></li>
+                        <li title="[鼓掌]"><img src="static/images/face/39.gif"></li>
+                        <li title="[晕]"><img src="static/images/face/40.gif"></li>
+                        <li title="[悲伤]"><img src="static/images/face/41.gif"></li>
+                    </ul>
+                </div>
+                <div class="mui-slider-item">
+                    <ul class="clear face-list">
+                        <li title="[抓狂]"><img src="static/images/face/42.gif"></li>
+                        <li title="[黑线]"><img src="static/images/face/43.gif"></li>
+                        <li title="[阴险]"><img src="static/images/face/44.gif"></li>
+                        <li title="[怒骂]"><img src="static/images/face/45.gif"></li>
+                        <li title="[互粉]"><img src="static/images/face/46.gif"></li>
+                        <li title="[心]"><img src="static/images/face/47.gif"></li>
+                        <li title="[伤心]"><img src="static/images/face/48.gif"></li>
+                        <li title="[猪头]"><img src="static/images/face/49.gif"></li>
+                        <li title="[熊猫]"><img src="static/images/face/50.gif"></li>
+                        <li title="[兔子]"><img src="static/images/face/51.gif"></li>
+                        <li title="[ok]"><img src="static/images/face/52.gif"></li>
+                        <li title="[耶]"><img src="static/images/face/53.gif"></li>
+                        <li title="[good]"><img src="static/images/face/54.gif"></li>
+                        <li title="[NO]"><img src="static/images/face/55.gif"></li>
+                        <li title="[赞]"><img src="static/images/face/56.gif"></li>
+                        <li title="[来]"><img src="static/images/face/57.gif"></li>
+                        <li title="[弱]"><img src="static/images/face/58.gif"></li>
+                        <li title="[草泥马]"><img src="static/images/face/59.gif"></li>
+                        <li title="[神马]"><img src="static/images/face/60.gif"></li>
+                        <li title="[囧]"><img src="static/images/face/61.gif"></li>
+                        <li title="[浮云]"><img src="static/images/face/62.gif"></li>
+                    </ul>
+                </div>
+                <div class="mui-slider-item">
+                    <ul class="clear face-list">
+                        <li title="[给力]"><img src="static/images/face/63.gif"></li>
+                        <li title="[围观]"><img src="static/images/face/64.gif"></li>
+                        <li title="[威武]"><img src="static/images/face/65.gif"></li>
+                        <li title="[奥特曼]"><img src="static/images/face/66.gif"></li>
+                        <li title="[礼物]"><img src="static/images/face/67.gif"></li>
+                        <li title="[钟]"><img src="static/images/face/68.gif"></li>
+                        <li title="[话筒]"><img src="static/images/face/69.gif"></li>
+                        <li title="[蜡烛]"><img src="static/images/face/70.gif"></li>
+                        <li title="[蛋糕]"><img src="static/images/face/71.gif"></li>
+                        <li title="[二哈]"><img src="static/images/face/72.gif"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mui-slider-indicator">
+                <div class="mui-indicator mui-active"></div>
+                <div class="mui-indicator"></div>
+                <div class="mui-indicator"></div>
+                <div class="mui-indicator"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 更多弹出内容 -->
+    <div class="mui-content more-content">
+        <ul class="mui-table-view mui-grid-view mui-grid-9">
+            <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" data-type="images">
+                 <span class="mui-icon mui-icon-image"></span>
+                 <div class="mui-media-body">图片</div>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+                <span class="mui-icon mui-icon-eye"></span>
+                <div class="mui-media-body">小视频</div>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+                <span class="mui-icon mui-icon-location"></span>
+                <div class="mui-media-body">位置</div>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+                <span class="mui-icon mui-icon-contact"></span>
+                <div class="mui-media-body">名片</div>
+            </li>
+        </ul>
+    </div>
+    
+</body>
+<script src="static/js/jquery-2.2.4.min.js"></script>
+<script src="static/js/mui.min.js"></script>
+<script src="static/js/mui.imageViewer.js"></script>
+<script type="text/javascript">
+var msgList = document.getElementById("msg_list");
+var boxMsgText = document.getElementById("msg_text");
+mui.init();
+(function($) {
+
+    //初始化图片浏览插件
+    var imageViewer = new $.ImageViewer('.msg-content-image', {
+        dbl: false
+    });
+    
+    var slider = document.getElementById('Gallery');
+    var group = slider.querySelector('.mui-slider-group');
+    var items = mui('.mui-slider-item', group);
+    //克隆第一个节点
+    var first = items[0].cloneNode(true);
+    first.classList.add('mui-slider-item-duplicate');
+    //克隆最后一个节点
+    var last = items[items.length - 1].cloneNode(true);
+    last.classList.add('mui-slider-item-duplicate');
+
+})(mui);
+
+$(function(){
+    
+    //输入框事件绑定
+    $("#msg_text").on({
+        "keydown": function(e){
+            var that = this;
+            if (e.ctrlKey && e.keyCode == 13) {
+//                sendMsg(that.val(), 0);
+                          var rawText = $("#msg_text").val()
+               //演示就直接拼接了
+        var html = '<li class="im-chat-mine">'+
+                '<div class="im-chat-user">'+
+                    '<img src="static/images/客户头像.jpg"/>'+
+                    '<cite>客户<i>'+getNowFormatDate()+'</i></cite>'+
+                '</div>'+
+                '<div class="im-chat-text">'+ imContent($("#msg_text").val()||'&nbsp;') +'</div>'+
+                '</li>';
+
+        //追加内容
+        msgList.insertAdjacentHTML('beforeEnd', html);
+        document.getElementById("msg_list").scrollTop = msgList.scrollHeight + msgList.offsetHeight;
+        //清空
+        $("#msg_text").val('')
+        showSendBtn();
+          $.get("/get", { msg: rawText }).done(function(data) {
+
+        var html = '<li>'+
+                '<div class="im-chat-user">'+
+                    '<img src="static/images/海信.png"/>'+
+                    '<cite><i>'+getNowFormatDate()+'</i>海信客服</cite>'+
+                '</div>'+
+                '<div class="im-chat-text">'+ imContent(data||'&nbsp;') +'</div>'+
+                '</li>';
+        //追加内容
+        msgList.insertAdjacentHTML('beforeEnd', html);
+        document.getElementById("msg_list").scrollTop = msgList.scrollHeight + msgList.offsetHeight;
+          });
+            }
+        },
+        "input propertychange": function(e){
+            showSendBtn();
+        },
+        "focus": function(){
+            if($(".more-content").css('display') != 'none'){
+                $(".more-content").hide();
+                $("footer").css("bottom", "0");
+                $(".im-chat-main").css("padding-bottom", "50px");
+                document.getElementById("msg_list").scrollTop = msgList.scrollHeight + msgList.offsetHeight;
+            }
+        }
+    });
+    
+     //语音按钮事件
+    $(".footer-left i.chat-icon-voice").on("tap", function(e){
+        var than = $(this);
+        
+        $(".face-content").hide();
+        $(".more-content").hide();
+        $("footer").css("bottom", "0");
+        $(".im-chat-main").css("padding-bottom", "50px");
+        $(".footer-right i:first").attr("class", "mui-icon chat-icon chat-icon-face");
+        if(than.hasClass("chat-icon-keyboard")){
+            $("#msg_text").show();
+            $("footer").css("padding-right","65px");
+            $(".footer-right").css("width","100px");
+            $(".footer-right").css("right","1px");
+            $(".footer-center").css("padding-right","25px");
+            $(".footer-center").css("padding-left","3px");
+            $(".footer-right i:first").show();
+            $(".footer-center .voice-btn").hide();
+            than.attr("class", "mui-icon chat-icon chat-icon-voice");
+            setTimeout(function(){
+                $("#msg_text").focus();
+            }, 10);
+        }else{
+            $("#msg_text").hide();
+            $("footer").css("padding-right","55px");
+            $(".footer-right").css("width","initial");
+            $(".footer-right").css("right","5px");
+            $(".footer-center").css("padding-right","0");
+            $(".footer-center").css("padding-left","10px");
+            $(".footer-right i:first").hide();
+            $(".footer-center .voice-btn").show();
+            than.attr("class", "mui-icon chat-icon chat-icon-keyboard");
+        }
+        
+        document.getElementById("msg_list").scrollTop = msgList.scrollHeight + msgList.offsetHeight+msgList.offsetHeight;
+    });
+    
+    //表情按钮事件
+    $(".footer-right i.chat-icon-face").on("tap", function(e){
+        var than = $(this);
+        var footer = $("footer");
+        
+        //隐藏语音输入
+        if($(".footer-left i:first").hasClass("chat-icon-keyboard")){
+            $(".footer-center .voice-btn").hide();
+            $(".footer-left i:first").attr("class", "mui-icon chat-icon chat-icon-voice");
+            $("#msg_text").show();
+            $("footer").css("padding-right","65px");
+            $(".footer-right").css("width","100px");
+            $(".footer-right").css("right","1px");
+            $(".footer-center").css("padding-right","25px");
+            $(".footer-center").css("padding-left","3px");
+            $(".footer-right i:first").show();
+        }
+        
+        if(than.hasClass("chat-icon-keyboard")){
+            $(".face-content").hide();
+            than.attr("class", "mui-icon chat-icon chat-icon-face");
+            footer.css("bottom", "0");
+            $(".im-chat-main").css("padding-bottom", "50px");
+            setTimeout(function(){
+                $("#msg_text").focus();
+            }, 10);
+        }else{
+            $(".more-content").hide();
+            $(".face-content").show();
+            than.attr("class", "mui-icon chat-icon chat-icon-keyboard");
+            footer.css("bottom", $(".face-content").height());
+            $(".im-chat-main").css("padding-bottom", $(".face-content").height()+50);
+        }
+        
+        document.getElementById("msg_list").scrollTop = msgList.scrollHeight + msgList.offsetHeight;
+    });
+    
+    //绑定表情点击事件
+    $(".face-content").find('.face-list>li').on('tap', function(){
+        focusInsert(boxMsgText, 'face' +  this.title + ' ');
+        showSendBtn();
+    });
+    
+    //更多按钮事件
+    $(".footer-right i.chat-icon-add-more").on("tap", function(e){
+        var than = $(this);
+        var footer = $("footer");
+        
+        //隐藏语音输入
+        if($(".footer-left i:first").hasClass("chat-icon-keyboard")){
+            $(".footer-center .voice-btn").hide();
+            $(".footer-left i:first").attr("class", "mui-icon chat-icon chat-icon-voice");
+            $("#msg_text").show();
+            $("footer").css("padding-right","65px");
+            $(".footer-right").css("width","100px");
+            $(".footer-right").css("right","1px");
+            $(".footer-center").css("padding-right","25px");
+            $(".footer-center").css("padding-left","3px");
+            $(".footer-right i:first").show();
+        }
+        
+        //为了美观把更多的高度设置成表情一样
+        $(".more-content").height($(".face-content").height());
+        
+        //表情是展开的则隐藏
+        if(than.prev().hasClass("chat-icon-keyboard")){
+            than.prev().attr("class", "mui-icon chat-icon chat-icon-face");
+        }
+        
+        if($(".more-content").css('display') != 'none'){
+            $(".more-content").hide();
+            footer.css("bottom", "0");
+            $(".im-chat-main").css("padding-bottom", "50px");
+        }else{
+            $(".face-content").hide();
+            $(".more-content").show();
+            footer.css("bottom", $(".more-content").height());
+            $(".im-chat-main").css("padding-bottom", $(".more-content").height()+50);
+        }
+        
+        document.getElementById("msg_list").scrollTop = msgList.scrollHeight + msgList.offsetHeight;
+    });
+    
+    //录音按钮事件绑定
+    $(".footer-center .voice-btn").on("tap", function(){
+        mui.toast("该功能正在开发中，敬请期待");
+    });
+    
+    //点击消息列表，关闭键盘
+   $("#msg_list").on('tap', function(event){
+        if(!focus){
+            boxMsgText.blur();
+        }
+        //表情是展开的则隐藏
+        if($(".footer-right i:first").hasClass("chat-icon-keyboard")){
+            $(".footer-right i:first").attr("class", "mui-icon chat-icon chat-icon-face");
+        }
+        $(".face-content").hide();
+        $(".more-content").hide();
+        $("footer").css("bottom", "0");
+        $(".im-chat-main").css("padding-bottom", "50px");
+        
+        document.getElementById("msg_list").scrollTop = msgList.scrollHeight + msgList.offsetHeight;
+    });
+    
+    //发送按钮事件
+   $("#sendMessage").on("tap", function(){
+
+          var rawText = $("#msg_text").val()
+               //演示就直接拼接了
+        var html = '<li class="im-chat-mine">'+
+                '<div class="im-chat-user">'+
+                    '<img src="static/images/客户头像.jpg"/>'+
+                    '<cite>客户<i>'+getNowFormatDate()+'</i></cite>'+
+                '</div>'+
+                '<div class="im-chat-text">'+ imContent($("#msg_text").val()||'&nbsp;') +'</div>'+
+                '</li>';
+
+        //追加内容
+        msgList.insertAdjacentHTML('beforeEnd', html);
+        document.getElementById("msg_list").scrollTop = msgList.scrollHeight + msgList.offsetHeight;
+        //清空
+        $("#msg_text").val('')
+        showSendBtn();
+          $.get("/get", { msg: rawText }).done(function(data) {
+
+        var html = '<li>'+
+                '<div class="im-chat-user">'+
+                    '<img src="static/images/海信.png"/>'+
+                    '<cite><i>'+getNowFormatDate()+'</i>海信客服</cite>'+
+                '</div>'+
+                '<div class="im-chat-text">'+ imContent(data||'&nbsp;') +'</div>'+
+                '</li>';
+        //追加内容
+        msgList.insertAdjacentHTML('beforeEnd', html);
+        document.getElementById("msg_list").scrollTop = msgList.scrollHeight + msgList.offsetHeight;
+          });
+    });
+});
+
+//显示或隐藏发送按钮
+function showSendBtn(){
+     //处理是否显示发送消息按钮
+    if($("#msg_text").val()){
+        $("#sendMessage").removeClass("mui-hidden");
+        $(".footer-right i.chat-icon-add-more").addClass("mui-hidden");
+    }else{
+        $("#sendMessage").addClass("mui-hidden");
+        $(".footer-right i.chat-icon-add-more").removeClass("mui-hidden");
+    }
+}
+
+//在焦点处插入内容
+function focusInsert(obj, str){
+  var result, val = obj.value;
+  obj.focus();
+  if(document.selection){ //ie
+    result = document.selection.createRange(); 
+    document.selection.empty(); 
+    result.text = str; 
+  } else {
+     result = [
+      val.substring(0, obj.selectionStart),
+      str,
+      val.substr(obj.selectionEnd)
+    ];
+    obj.focus();
+    obj.value = result.join('');
+  }
+}
+
+//转换内容
+function imContent(content){
+    //支持的html标签
+    var html = function(end){
+      return new RegExp('\\n*\\['+ (end||'') +'(pre|div|p|table|thead|th|tbody|tr|td|ul|li|ol|li|dl|dt|dd|h2|h3|h4|h5)([\\s\\S]*?)\\]\\n*', 'g');
+    };
+    content = (content||'').replace(/&(?!#?[a-zA-Z0-9]+;)/g, '&amp;')
+    .replace(/face\[([^\s\[\]]+?)\]/g, function(face){  //转义表情
+      var alt = face.replace(/^face/g, '');
+      return '<img alt="'+ alt +'" title="'+ alt +'" src="' + faces[alt] + '">';
+    }).replace(/a\([\s\S]+?\)\[[\s\S]*?\]/g, function(str){ //转义链接
+      var href = (str.match(/a\(([\s\S]+?)\)\[/)||[])[1];
+      var text = (str.match(/\)\[([\s\S]*?)\]/)||[])[1];
+      if(!href) 
+          return str;
+      return '<a href="'+ href +'" target="_blank">'+ (text||href) +'</a>';
+    }).replace(html(), '\<$1 $2\>').replace(html('/'), '\</$1\>') //转移代码
+    .replace(/\n/g, '<br>') //转义换行 
+    return content;
+}
+/**
+ * 获取当前时间
+ */
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
+    return currentdate;
+}
+</script>
+</html>
