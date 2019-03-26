@@ -1,10 +1,15 @@
 import datetime
 import re
 from  data import initial_data
+from Util import data_cleaning
 replies_dict=initial_data.loading_replies()
 deny_flag=False
 deny_count=0
 new_date=0
+
+
+
+
 
 def process_time(text):
     global deny_flag,deny_count,new_date
@@ -34,10 +39,12 @@ def process_time(text):
         elif deny_count>=2:
             return "我找个同事帮帮你确认下时间吧，已经为您转接人工服务"
 
-    elif ("上午" in text)|("下午" in text):
-        new_date=str(text).replace("上午","10点")
-        new_date = str(text).replace("下午", "16点")
+    elif ("年" in text)|("月" in text)|("日" in text):
+        a=text[text.find("年")-4]
+        b=text.find("点")
+        new_date=text[text.find("年")-4:text.find("点")+1]
         return "好的了解，帮您预约在{}行吗".format(new_date)
+    else:return False
 
 def classify_normal_intent(text, sys_intent, slot_attribute, replies_dict):
     new_slot=initial_data.new_slot
@@ -102,6 +109,7 @@ def classify_version(text):
 def policy(text):
     return_sentence=False
     if initial_data.sys_intent[-1]=="time":
+        text=data_cleaning.clean_time_text(text)
         return_sentence=process_time(text)
     else:
         for item in replies_dict["confirm_daily_talk_dict"].keys():
@@ -116,8 +124,8 @@ def policy(text):
                 return_sentence = flag
             else:
                 continue
-        if return_sentence is False:
-            return_sentence = replies_dict["error_reply"]
+    if return_sentence is False:
+        return_sentence = replies_dict["error_reply"]
 
     return return_sentence
 
@@ -159,6 +167,8 @@ def search(text, info_list, slot_attribute):
 
 
 def get_response(text):
+    text=data_cleaning.remove_punctuation(text,strip_all=False)
+    text=data_cleaning.get_stopwords(text)
     text = policy(text)
     print('\033[1;32m' + "槽信息填充情况：", initial_data.slot, '\033[0m')
     print('\033[1;32m' + "上一轮对话意图：", initial_data.usr_intent[-2], '\033[0m')
