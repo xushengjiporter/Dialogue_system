@@ -9,8 +9,6 @@ new_date=0
 
 
 
-
-
 def process_time(text):
     global deny_flag,deny_count,new_date
     if (("好的" in text)|("行" in text)|("可以" in text)|("方便" in text))&("不" not in text):
