@@ -6,6 +6,7 @@ replies_dict=initial_data.loading_replies()
 deny_flag=False
 deny_count=0
 new_date=0
+history_path=".\history\\"
 
 def process_time(text):
     global deny_flag,deny_count,new_date
@@ -15,8 +16,10 @@ def process_time(text):
         initial_data.new_slot["time"]=False
         if new_date==0:
             new_date=(datetime.datetime.now()+datetime.timedelta(hours=1)).strftime("%Y-%m-%d %H")+"点"
+            initial_data.slot["time"] = new_date
         else:
             initial_data.slot["time"]=new_date
+
         return replies_dict["ending"]
 
     elif("不好" in text)|("不行" in text)|("不可以" in text)|("不方便" in text):
@@ -64,5 +67,16 @@ def policy(text):
                 continue
     if return_sentence is False:
         return_sentence = replies_dict["error_reply"]
+    if "感谢" in return_sentence:
+        log_name=datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S")
+        path=history_path+log_name+".txt"
+        with open(path,"a",encoding="utf-8") as f:
+            for key,value in initial_data.slot.items():
+                f.write(key)
+                f.write(":")
+                f.write(value+"\n")
+        f.close()
+
+
 
     return return_sentence

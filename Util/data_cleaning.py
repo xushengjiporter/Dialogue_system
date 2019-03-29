@@ -66,9 +66,6 @@ def sub_index(string,location,word):
 
 
 
-# text="2019年3月26日下午"
-# text=clean_time_text(text)
-# print(text)
 
 
 
