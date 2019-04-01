@@ -1,20 +1,24 @@
 from Util import properites_replies
-properties_path = "D:\\Users\jixusheng\PycharmProjects\shanda\\replies.properties"
+properties_path = "D:\\Users\jixusheng\PycharmProjects\Dialogue_system\\replies.properties"
 dictProperties = properites_replies.Properties(properties_path).getProperties()
 
-slot = {}
-sys_intent = [None]
-usr_intent = [None, None]
-ending_greeting = False
-new_slot_flag=[]
 
-for i in range(len(dictProperties["slots"].split(","))):
-    new_slot_flag.append(True)
+def initial_variable():
+    slot = {}
+    sys_intent = [None]
+    usr_intent = [None, None]
+    ending_greeting = False
+    new_slot_flag = []
 
-new_slot=dict(zip(dictProperties["slots"].split(","),new_slot_flag))
+    for i in range(len(dictProperties["slots"].split(","))):
+        new_slot_flag.append(True)
+
+    new_slot = dict(zip(dictProperties["slots"].split(","), new_slot_flag))
+    return slot,sys_intent,usr_intent,ending_greeting,new_slot
 
 
 def loading_replies():
+
 
 
 
@@ -62,6 +66,5 @@ def loading_replies():
     values = [update_dict, ending, error_reply, need_ask_slot, askings_dict, confirms_dict, trigger_dict,
               confirm_daily_talk_dict, trigger_daily_talk_dict]
     replies_dict = dict(zip(keys, values))
-
 
     return replies_dict
