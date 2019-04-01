@@ -6,11 +6,15 @@ from NLU import SlotFilling
 from model import agent
 
 class IntentClassify:
-    def __init__(self):
-        self.replies_dict=initial_data.loading_replies()
-        self.slot,self.sys_intent,self.usr_intent,self.ending_greeting,self.new_slot=initial_data.initial_variable()
-        self.history=".\history\\"
-        self.policy_mapping = PolicyLearning.PolicyLearningMapping()
+    replies_dict = initial_data.loading_replies()
+    slot, sys_intent, usr_intent, ending_greeting, new_slot = initial_data.initial_variable()
+    history = ".\history\\"
+    policy_mapping = PolicyLearning.PolicyLearningMapping()
+    # def __init__(self):
+    #     self.replies_dict=initial_data.loading_replies()
+    #     self.slot,self.sys_intent,self.usr_intent,self.ending_greeting,self.new_slot=initial_data.initial_variable()
+    #     self.history=".\history\\"
+    #     self.policy_mapping = PolicyLearning.PolicyLearningMapping()
 
 
     def Communicative_function(self,text):
@@ -24,7 +28,6 @@ class IntentClassify:
 
         else:
             if self.sys_intent[-1] == "time":
-
                 text = data_cleaning.clean_time_text(text)
                 return_sentence =self.policy_mapping.process_time(text,self.replies_dict,self.sys_intent,self.new_slot,self.slot)
 
@@ -36,7 +39,7 @@ class IntentClassify:
                     else:
                         continue
                 for item in self.replies_dict["askings_dict"].keys():
-                    flag = self.book_maintainess(text, item)
+                    flag = self.policy_mapping.book_maintainess(text, item)
                     if flag is not False:
                         return_sentence = flag
                     else:
@@ -66,30 +69,7 @@ class IntentClassify:
         return False
 
 
-    def book_maintainess(self,text,slot_keys):
 
-        if(SlotFilling.SlotFiller.search(text,self.replies_dict["trigger_dict"][slot_keys].split(","),self.slot,slot_keys) is True):
-            if (len(self.replies_dict["need_ask_slot"]) >= 3) & (self.new_slot[slot_keys] is True):
-                self.replies_dict["need_ask_slot"].remove(slot_keys)
-                self.sys_intent.append(self.replies_dict["need_ask_slot"][0])
-                self.new_slot[slot_keys] = False
-                return_sentence = self.replies_dict["askings_dict"][self.sys_intent[-1]]
-                if "{}" in return_sentence:
-                    return_sentence = return_sentence.format(
-                        (datetime.datetime.now() + datetime.timedelta(hours=1)).strftime("%Y-%m-%d %H") + "点")
-            elif (len(self.replies_dict["need_ask_slot"]) >= 2) & (self.new_slot[slot_keys] is False):
-                    return_sentence = self.replies_dict["update_dict"][slot_keys] + "\n" + self.replies_dict["askings_dict"][
-                        self.sys_intent[-1]]
-                    if "{}" in return_sentence:
-                        return_sentence = return_sentence.format(
-                            (datetime.datetime.now() + datetime.timedelta(hours=1)).strftime("%Y-%m-%d %H") + "点")
-            elif (len(self.replies_dict["need_ask_slot"]) == 2) & (self.new_slot[slot_keys] is True):
-                    return_sentence = self.replies_dict["ending"]
-            elif (len(self.replies_dict["need_ask_slot"]) == 1):
-                    return_sentence = self.replies_dict["update_dict"][slot_keys]
-            return return_sentence
-        else:
-                return False
 
 
     @staticmethod

@@ -1,13 +1,16 @@
 import datetime
+from NLU import SlotFilling,IntentClassification
 
 class PolicyLearningMapping:
-    def __init__(self):
-        self.deny_flag = False
-        self.deny_count = 0
-        self.new_date = 0
-    # deny_flag = False
-    # deny_count = 0
-    # new_date = 0
+    deny_flag = False
+    deny_count = 0
+    new_date = 0
+
+    # def __init__(self):
+    #     self.deny_flag = False
+    #     self.deny_count = 0
+    #     self.new_date = 0
+
 
     def process_time(self,text,replies_dict,sys_intent,new_slot,slot):
         if (("好的" in text) | ("行" in text) | ("可以" in text) | ("方便" in text)) & ("不" not in text):
@@ -60,5 +63,28 @@ class PolicyLearningMapping:
         elif ("手机号码" in text)|("联系方式" in text)|("手机" in text):
             return "您的联系方式为"+slot["tele"]
 
+    def book_maintainess(self,text,slot_keys):
 
+        if(SlotFilling.SlotFiller.search(text,IntentClassification.IntentClassify.replies_dict["trigger_dict"][slot_keys].split(","),IntentClassification.IntentClassify.slot,slot_keys) is True):
+            if (len(IntentClassification.IntentClassify.replies_dict["need_ask_slot"]) >= 3) & (IntentClassification.IntentClassify.new_slot[slot_keys] is True):
+                IntentClassification.IntentClassify.replies_dict["need_ask_slot"].remove(slot_keys)
+                IntentClassification.IntentClassify.sys_intent.append(IntentClassification.IntentClassify.replies_dict["need_ask_slot"][0])
+                IntentClassification.IntentClassify.new_slot[slot_keys] = False
+                return_sentence = IntentClassification.IntentClassify.replies_dict["askings_dict"][IntentClassification.IntentClassify.sys_intent[-1]]
+                if "{}" in return_sentence:
+                    return_sentence = return_sentence.format(
+                        (datetime.datetime.now() + datetime.timedelta(hours=1)).strftime("%Y-%m-%d %H") + "点")
+            elif (len(IntentClassification.IntentClassify.replies_dict["need_ask_slot"]) >= 2) & (IntentClassification.IntentClassify.new_slot[slot_keys] is False):
+                    return_sentence = IntentClassification.IntentClassify.replies_dict["update_dict"][slot_keys] + "\n" + IntentClassification.IntentClassify.replies_dict["askings_dict"][
+                        IntentClassification.IntentClassify.sys_intent[-1]]
+                    if "{}" in return_sentence:
+                        return_sentence = return_sentence.format(
+                            (datetime.datetime.now() + datetime.timedelta(hours=1)).strftime("%Y-%m-%d %H") + "点")
+            elif (len(IntentClassification.IntentClassify.replies_dict["need_ask_slot"]) == 2) & (IntentClassification.IntentClassify.new_slot[slot_keys] is True):
+                    return_sentence = IntentClassification.IntentClassify.replies_dict["ending"]
+            elif (len(IntentClassification.IntentClassify.replies_dict["need_ask_slot"]) == 1):
+                    return_sentence = IntentClassification.IntentClassify.replies_dict["update_dict"][slot_keys]
+            return return_sentence
+        else:
+                return False
 
