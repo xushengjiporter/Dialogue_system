@@ -46,4 +46,19 @@ class PolicyLearningMapping:
         else:
             return False
 
+    def ask_slot(self,text,slot):
+        if ("故障" in text)|("坏了" in text):
+            return "您的空调故障信息为"+slot["failure"]
+        elif ("品牌" in text)|("牌子" in text):
+            return "您的空调品牌为为"+slot["brand"]
+        elif ("产品型号" in text)|("型号" in text):
+            return "您的空调型号信息为"+slot["version"]
+        elif ("地址" in text)|("地址" in text):
+            return "您的空调上门维修地址为"+slot["location"]
+        elif ("时间" in text)|("预约时间" in text):
+            return "您的空调预约时间为"+slot["time"]
+        elif ("手机号码" in text)|("联系方式" in text)|("手机" in text):
+            return "您的联系方式为"+slot["tele"]
+
+
 
