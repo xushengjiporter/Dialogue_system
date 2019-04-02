@@ -6,22 +6,22 @@ from DM import PolicyLearning
 
 
 class IntentClassify:
-    replies_dict = initial_data.loading_replies()
-    slot, sys_intent, usr_intent, ending_greeting, new_slot = initial_data.initial_variable()
-    history = ".\history\\"
-    policy_mapping = PolicyLearning.PolicyLearningMapping()
-    # def __init__(self):
-    #     self.replies_dict=initial_data.loading_replies()
-    #     self.slot,self.sys_intent,self.usr_intent,self.ending_greeting,self.new_slot=initial_data.initial_variable()
-    #     self.history=".\history\\"
-    #     self.policy_mapping = PolicyLearning.PolicyLearningMapping()
+    # replies_dict = initial_data.loading_replies()
+    # slot, sys_intent, usr_intent, ending_greeting, new_slot = initial_data.initial_variable()
+    # history = ".\history\\"
+    # policy_mapping = PolicyLearning.PolicyLearningMapping()
+    def __init__(self):
+        self.replies_dict=initial_data.loading_replies()
+        self.slot,self.sys_intent,self.usr_intent,self.ending_greeting,self.new_slot=initial_data.initial_variable()
+        self.history=".\history\\"
+        self.policy_mapping = PolicyLearning.PolicyLearningMapping()
 
 
     def Communicative_function(self,text):
         return_sentence = False
         if ("重新开始" in text) | ("重启" in text):
-            IntentClassify.replies_dict=initial_data.loading_replies()
-            IntentClassify.slot, IntentClassify.sys_intent, IntentClassify.usr_intent, IntentClassify.ending_greeting, IntentClassify.new_slot=initial_data.initial_variable()
+            self.replies_dict=initial_data.loading_replies()
+            self.slot, self.sys_intent, self.usr_intent, self.ending_greeting, self.new_slot=initial_data.initial_variable()
             return "你好，我是海信客服，请问有什么帮您的？"
         if("查询" in text)|("告诉" in text ):
             return self.policy_mapping.ask_slot(text,self.slot)
@@ -39,7 +39,7 @@ class IntentClassify:
                     else:
                         continue
                 for item in self.replies_dict["askings_dict"].keys():
-                    flag = self.policy_mapping.book_maintainess(text, item)
+                    flag = self.policy_mapping.book_maintainess(text,self.replies_dict,self.slot,item,self.new_slot,self.sys_intent)
                     if flag is not False:
                         return_sentence = flag
                     else:
