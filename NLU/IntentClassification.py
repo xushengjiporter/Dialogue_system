@@ -2,8 +2,8 @@ from data import initial_data
 import datetime
 from Util import data_cleaning
 from DM import PolicyLearning
-from NLU import SlotFilling
-from model import agent
+
+
 
 class IntentClassify:
     replies_dict = initial_data.loading_replies()
@@ -20,8 +20,8 @@ class IntentClassify:
     def Communicative_function(self,text):
         return_sentence = False
         if ("重新开始" in text) | ("重启" in text):
-            agent.intent_classify.replies_dict=initial_data.loading_replies()
-            agent.intent_classify.slot, agent.intent_classify.sys_intent, agent.intent_classify.usr_intent, agent.intent_classify.ending_greeting, agent.intent_classify.new_slot=initial_data.initial_variable()
+            IntentClassify.replies_dict=initial_data.loading_replies()
+            IntentClassify.slot, IntentClassify.sys_intent, IntentClassify.usr_intent, IntentClassify.ending_greeting, IntentClassify.new_slot=initial_data.initial_variable()
             return "你好，我是海信客服，请问有什么帮您的？"
         if("查询" in text)|("告诉" in text ):
             return self.policy_mapping.ask_slot(text,self.slot)

@@ -1,5 +1,6 @@
 from Util import properites_replies
-properties_path = "D:\\Users\jixusheng\PycharmProjects\Dialogue_system\\replies.properties"
+import os
+properties_path = "D:\\Users\jixusheng\PycharmProjects\Dialogue_system\\Ontology.properties"
 dictProperties = properites_replies.Properties(properties_path).getProperties()
 
 
@@ -18,10 +19,6 @@ def initial_variable():
 
 
 def loading_replies():
-
-
-
-
     slot_keys = []
     askings = []
     confirms = []
@@ -51,7 +48,6 @@ def loading_replies():
     for item in dictProperties["trigger_daily_talk"].split(","):
         trigger_daily_talk.append(dictProperties[item])
 
-
     ending = dictProperties["ending"]
     error_reply = dictProperties["error_reply"]
     need_ask_slot = slot_keys+["ending"]
@@ -68,3 +64,18 @@ def loading_replies():
     replies_dict = dict(zip(keys, values))
 
     return replies_dict
+
+
+def loading_history(path):
+    historywithtime = {}
+    filelists = os.listdir(path)
+    for file in filelists:
+        with open(path + file, "r", encoding="utf8") as f:
+            history = {}
+            lines = f.readlines()
+            for line in lines:
+                listline = line.strip("\n").split(":")
+                history[listline[0]] = listline[1]
+        file = file.strip(".txt")
+        historywithtime[file] = history
+    return historywithtime
