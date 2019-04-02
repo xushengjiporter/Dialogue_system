@@ -31,9 +31,9 @@ class PolicyLearningMapping:
                 self.deny_count += 1
                 hours = int((datetime.datetime.now() + datetime.timedelta(hours=1)).strftime("%H"))
                 if hours >= 13 & hours <= 24:
-                    self.new_date = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%d ") + "10点"
+                    self.new_date = (datetime.datetime.now() + datetime.timedelta(days=1)).strftime("%Y-%m-%d ") + "10点00分"
                 else:
-                    self.new_date = (datetime.datetime.now() + datetime.timedelta(hours=5)).strftime("%Y-%m-%d %10") + "点"
+                    self.new_date = (datetime.datetime.now() + datetime.timedelta(hours=5)).strftime("%Y-%m-%d %H") + "点00分"
                 return "那您看{}行吗".format(self.new_date)
             elif (self.deny_flag is True) & (self.deny_count < 2):
                 self.deny_count += 1
