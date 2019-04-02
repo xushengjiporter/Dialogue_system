@@ -65,17 +65,17 @@ def loading_replies():
 
     return replies_dict
 
-
-def loading_history(path):
-    historywithtime = {}
-    filelists = os.listdir(path)
-    for file in filelists:
-        with open(path + file, "r", encoding="utf8") as f:
-            history = {}
-            lines = f.readlines()
-            for line in lines:
-                listline = line.strip("\n").split(":")
-                history[listline[0]] = listline[1]
-        file = file.strip(".txt")
-        historywithtime[file] = history
-    return historywithtime
+#
+# def loading_history(path):
+#     historywithtime = {}
+#     filelists = os.listdir(path)
+#     for file in filelists:
+#         with open(path + file, "r", encoding="utf8") as f:
+#             history = {}
+#             lines = f.readlines()
+#             for line in lines:
+#                 listline = line.strip("\n").split(":")
+#                 history[listline[0]] = listline[1]
+#         file = file.strip(".txt")
+#         historywithtime[file] = history
+#     return historywithtime

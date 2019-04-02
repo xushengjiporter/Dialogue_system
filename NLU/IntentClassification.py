@@ -30,7 +30,6 @@ class IntentClassify:
             if self.sys_intent[-1] == "time":
                 text = data_cleaning.clean_time_text(text)
                 return_sentence =self.policy_mapping.process_time(text,self.replies_dict,self.sys_intent,self.new_slot,self.slot)
-
             else:
                 for item in self.replies_dict["confirm_daily_talk_dict"].keys():
                     flag = self.daily_talk(text, item)

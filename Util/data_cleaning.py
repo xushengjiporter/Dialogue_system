@@ -51,10 +51,10 @@ def clean_time_text(text):
         elif int(text[text.find("下午")+2:text.find("点")])>=13:
             text = text.replace("下午", "")
     if (len(re.findall(re.compile((r"([\u4E00-\u9FA5]*|[0-9]*)上午([\u4E00-\u9FA5]*|[0-9]*)点")), text))==0)&(len(re.findall(re.compile((r"([\u4E00-\u9FA5]*|[0-9]*)上午([\u4E00-\u9FA5]*|[0-9]*)")), text))>0):
-        text = text.replace("上午", " 10点")
+        text = text.replace("上午", " 10点30分")
     if (len(re.findall(re.compile((r"([\u4E00-\u9FA5]*|[0-9]*)下午([\u4E00-\u9FA5]*|[0-9]*)点")), text)) == 0) & (
             len(re.findall(re.compile((r"([\u4E00-\u9FA5]*|[0-9]*)下午([\u4E00-\u9FA5]*|[0-9]*)")), text)) > 0):
-        text = text.replace("下午", " 16点")
+        text = text.replace("下午", " 16点30分")
     return text
 
 def sub_index(string,location,word):

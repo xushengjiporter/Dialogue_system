@@ -1,9 +1,9 @@
 from Util import data_cleaning
 from NLU import IntentClassification
-from data.initial_data import loading_history
+#from data.initial_data import loading_history
 path="..\.\history\\"
 ic=IntentClassification.IntentClassify()
-historywithtime=loading_history(path)
+#historywithtime=loading_history(path)
 
 
 def get_response(text):

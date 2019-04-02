@@ -13,7 +13,7 @@ class PolicyLearningMapping:
 
 
     def process_time(self,text,replies_dict,sys_intent,new_slot,slot):
-        if (("好的" in text) | ("行" in text) | ("可以" in text) | ("方便" in text)) & ("不" not in text):
+        if (("好的" in text) | ("行" in text) | ("可以" in text) | ("方便" in text)) & ("不" not in text)&("吗" not in text):
             replies_dict["need_ask_slot"].remove("time")
             sys_intent.append(replies_dict["need_ask_slot"][0])
             new_slot["time"] = False
@@ -42,8 +42,6 @@ class PolicyLearningMapping:
                 return "我找个同事帮帮你确认下时间吧，已经为您转接人工服务"
 
         elif ("年" in text) | ("月" in text) | ("日" in text):
-            a = text[text.find("年") - 4]
-            b = text.find("点")
             self.new_date = text[text.find("年") - 4:text.find("点") + 1]
             return "好的了解，帮您预约在{}行吗".format(self.new_date)
         else:
@@ -75,14 +73,15 @@ class PolicyLearningMapping:
                 new_slot[slot_keys] = False
                 return_sentence = replies_dict["askings_dict"][sys_intent[-1]]
                 if "{}" in return_sentence:
+
                     return_sentence = return_sentence.format(
-                        (datetime.datetime.now() + datetime.timedelta(hours=1)).strftime("%Y-%m-%d %H") + "点")
+                        (datetime.datetime.now() + datetime.timedelta(hours=1)).strftime("%Y-%m-%d ") + "16点30分")
             elif (len(replies_dict["need_ask_slot"]) >= 2) & (new_slot[slot_keys] is False):
                     return_sentence = replies_dict["update_dict"][slot_keys] + "\n" + replies_dict["askings_dict"][
                         sys_intent[-1]]
                     if "{}" in return_sentence:
                         return_sentence = return_sentence.format(
-                            (datetime.datetime.now() + datetime.timedelta(hours=1)).strftime("%Y-%m-%d %H") + "点")
+                            (datetime.datetime.now() + datetime.timedelta(hours=1)).strftime("%Y-%m-%d ") + "16点30分")
             elif (len(replies_dict["need_ask_slot"]) == 2) & (new_slot[slot_keys] is True):
                     return_sentence = replies_dict["ending"]
             elif (len(replies_dict["need_ask_slot"]) == 1):
