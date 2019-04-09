@@ -32,9 +32,7 @@ class NLGManager:
                                 static_variables.REPLIES_DICT["askings_dict"][static_variables.SYS_INTENT[-1]]).format(
                                 (datetime.datetime.now() + datetime.timedelta(hours=1)).strftime(
                                     "%Y-%m-%d ") + "16点30分"))
-                        # slot_value=list(sys_slot.values())[0]
-                        # if (static_variables.SYS_INTENT[-1]=='time')&(slot_value == None):
-                    if(sys_communicative_function=="request")&(list(sys_slot.values())[0]==["again"])&(static_variables.SYS_INTENT[-1]=='time'):
+                    if(sys_communicative_function=="request")&(list(sys_slot.values())[0]=="again")&(static_variables.SYS_INTENT[-1]=='time'):
                         hours = int((datetime.datetime.now() + datetime.timedelta(hours=1)).strftime("%H"))
                         if hours >= 13 & hours <= 24:
                             static_variables.NEW_DATE = (datetime.datetime.now() + datetime.timedelta(
@@ -43,14 +41,16 @@ class NLGManager:
                                 static_variables.NEW_DATE = (datetime.datetime.now() + datetime.timedelta(
                                         hours=5)).strftime("%Y-%m-%d %H") + "点00分"
                         repiles.append("那您看{}行吗".format(static_variables.NEW_DATE))
-                    if (sys_communicative_function == "request") & (list(sys_slot.values())[0] == ["format"]) & (
+                    if (sys_communicative_function == "request") & (list(sys_slot.values())[0] == "format") & (
                                 static_variables.SYS_INTENT[-1] == 'time'):
                         repiles.append("请您提供合适的时间段，格式为xx年xx月xx日xx点(xx年xx月xx日上午/下午),例如2019年3月25日10点或者2019年3月25日上午/下午")
-                    if (sys_communicative_function == "request") & (list(sys_slot.values())[0] == ["ambiguous"]) & (
+
+                    if (sys_communicative_function == "request") & (list(sys_slot.values())[0] == "ambiguous") & (
                                 static_variables.SYS_INTENT[-1] == 'time'):
                         text = data_cleaning.clean_time_text(text)
-                        repiles.append("请问{}可以吗".format(text))
-                    if(sys_communicative_function == "request") & (list(sys_slot.values())[0] != ["ambiguous"])& (list(sys_slot.values())[0] != ["again"])& (list(sys_slot.values())[0] != ["format"]):
+                        reply="请问{}可以吗".format(text)
+                        repiles.append(reply)
+                    if(sys_communicative_function == "request") & (list(sys_slot.values())[0] != "ambiguous")& (list(sys_slot.values())[0] != "again")& (list(sys_slot.values())[0] != "format"):
                         repiles.append(static_variables.REPLIES_DICT["askings_dict"][static_variables.SYS_INTENT[-1]])
             for reply in repiles:
                 reply = "".join(reply)
