@@ -56,7 +56,6 @@ class NLGManager:
                 reply = "".join(reply)
                 return_sentence = return_sentence + reply
             return return_sentence
-
         elif cf_and_slot_list is False:
             repiles.append(static_variables.REPLIES_DICT["error_reply"])
             repiles = "".join(repiles)
