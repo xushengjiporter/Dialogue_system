@@ -1,7 +1,6 @@
 from data import initial_data
 from Util import data_cleaning
-from DM import PolicyLearning
-import static_variables,re
+import static_variables
 class NLUModular:
     def __init__(self):
         pass
