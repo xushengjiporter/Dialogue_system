@@ -55,9 +55,11 @@ def loading_replies():
     for item in dictProperties["trigger_intent"].split(","):
         trigger_intent.append(dictProperties[item])
 
+
     ending = dictProperties["ending"]
     error_reply = dictProperties["error_reply"]
     need_ask_slot = slot+["ending"]
+    trigger_ambiguous_time=dictProperties["trigger_ambiguous_time"]
     askings_dict = dict(zip(slot, askings))
     confirms_dict = dict(zip(slot, confirms))
     trigger_dict = dict(zip(slot, trigger))
@@ -69,11 +71,11 @@ def loading_replies():
     confirm_request_dict = dict(zip(slot, confirm_request))
 
     keys = ["update_dict", "ending", "error_reply", "need_ask_slot", "askings_dict", "confirms_dict", "trigger_dict","trigger_request_dict",
-            "confirm_intent_dict", "trigger_intent_dict",'confirm_request_dict']
+            "confirm_intent_dict", "trigger_intent_dict",'confirm_request_dict','trigger_ambiguous_time']
     values = [update_dict, ending, error_reply, need_ask_slot, askings_dict, confirms_dict, trigger_dict,trigger_request_dict,
-              confirm_intent_dict, trigger_intent_dict,confirm_request_dict]
+              confirm_intent_dict, trigger_intent_dict,confirm_request_dict,trigger_ambiguous_time]
     replies_dict = dict(zip(keys, values))
-    c=replies_dict["trigger_request_dict"]
+
     return replies_dict
 
 def loading_history(path):
