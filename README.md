@@ -3,8 +3,12 @@ Hisense task-oriented dialogue system
 
 This system contains three major compoenent which is NLU,DM and NLG.
 
-NLU contains intent recognition,communicative function classification and slot recognition.
+NLU contains slot recognizer and intent classification.
 
-DM only contains policy learning and we haven't submmit NLG part yet.
+DM contains dialogue state tracking and policy leanring.
 
-This system is a rule-based system currently and will be implemented using statiscs method.
+And NLG is responsible for generating repiles for users.
+
+Any developers can use this system using command "python routing.py" and "127.0.0.1" can be used as a web services
+
+
