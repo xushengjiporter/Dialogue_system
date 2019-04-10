@@ -64,26 +64,16 @@ def sub_index(string,location,word):
     new[location]=word
     return "".join(new)
 
+def transfer_slot_to_chinese(text):
+    if text=="brand":
+        return "品牌"
+    elif text=="version":
+        return "型号"
+    elif text=="tele":
+        return "联系方式"
+    elif text=="location":
+        return "地址"
 
-def search( text, trigger_words, slot_keys):
-    count = 0
-    if slot_keys == "tele":
-        if len(re.findall(
-                    r'[\u4E00-\u9FA5]*1((3[\d])|(4[75])|(5[^3|4])|(66)|(7[013678])|(8[\d])|(9[89]))\d{8}[\u4E00-\u9FA5]*',
-                    text)) != 0:
-            return True
-        else:
-            return False
-    else:
-        for item in trigger_words:
-            if text.find(item) == -1:
-                count += 1
-                continue
-            else:
-                break
-        if count == len(trigger_words):
-            return False
-    return True
 
 
 

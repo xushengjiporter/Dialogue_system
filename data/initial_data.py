@@ -1,5 +1,5 @@
 from Util import properites_replies
-import os
+import os,datetime
 properties_path = "D:\\Users\jixusheng\PycharmProjects\Dialogue_system\\Ontology.properties"
 dictProperties = properites_replies.Properties(properties_path).getProperties()
 
@@ -78,16 +78,42 @@ def loading_replies():
 
     return replies_dict
 
-def loading_history(path):
-    historywithtime = {}
-    filelists = os.listdir(path)
+def loading_history():
+    import static_variables,collections
+    historywithtime=collections.OrderedDict()
+    filelists = os.listdir(static_variables.HISTORY_PATH)
     for file in filelists:
-        with open(path + file, "r", encoding="utf8") as f:
-            history = {}
-            lines = f.readlines()
-            for line in lines:
-                listline = line.strip("\n").split(":")
-                history[listline[0]] = listline[1]
-        file = file.strip(".txt")
-        historywithtime[file] = history
+        if file=="__pycache__":
+            continue
+        else:
+            with open(static_variables.HISTORY_PATH + file, "r", encoding="utf8") as f:
+                history = {}
+                lines = f.readlines()
+                for line in lines:
+                    listline = line.strip("\n").split(":")
+                    history[listline[0]] = listline[1]
+            file = file.strip(".txt")
+            historywithtime[file] = history
+
     return historywithtime
+
+
+def save_history():
+    import static_variables
+    log_name = datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S")
+    path =static_variables.HISTORY_PATH +log_name + ".txt"
+    with open(path,"a",encoding="utf-8") as f:
+        for slot_key,slot_value in static_variables.SLOT.items():
+            f.write(slot_key)
+            f.write(":")
+            f.write(slot_value+"\n")
+    f.close()
+
+def get_newest_history():
+    import static_variables
+    if len(static_variables.HISTORY_WITH_TIME)>0:
+        newest_history_key = list(static_variables.HISTORY_WITH_TIME.keys())[-1]
+        newest_history = static_variables.HISTORY_WITH_TIME[newest_history_key]
+        return newest_history
+    else:
+        return {}

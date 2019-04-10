@@ -1,5 +1,3 @@
-from data import initial_data
-from Util import data_cleaning
 import static_variables
 class NLUModular:
     def __init__(self):
@@ -38,11 +36,11 @@ class NLUModular:
             #communicative_function_list.append("request")
             communicative_function_list="request"
             return communicative_function_list
-        elif ("不好" in text) | ("不行" in text) | ("不可以" in text) | ("不方便" in text):
+        elif ("不好" in text) | ("不行" in text) | ("不可以" in text) | ("不方便" in text)|("不是" in text)|("不对" in text):
             #communicative_function_list.append("deny")
             communicative_function_list = "deny"
             return communicative_function_list
-        elif (("好的" in text) | ("行" in text) | ("可以" in text) | ("方便" in text)) & ("不" not in text)&("吗" not in text):
+        elif (("对的" in text)|("是的" in text)|("好的" in text) | ("行" in text) | ("可以" in text) | ("方便" in text)) & ("不" not in text)&("吗" not in text):
             #communicative_function_list.append("confirm")
             communicative_function_list = "confirm"
             return communicative_function_list

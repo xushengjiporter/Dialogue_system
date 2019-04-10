@@ -1,12 +1,10 @@
-from Util import data_cleaning
-from NLU import IntentClassification
-from data.initial_data import loading_history
 # path=".\history\\"
 # ic=IntentClassification.IntentClassify()
-# historywithtime=loading_history(path)
-from NLU import IntentClassification,slot_recognizer
+#historywithtime=loading_history(path)
+from NLU.intent_classification import IntentClassification
+from NLU.slot_recognizer import slot_recognizer
 from NLG import nlg_manager
-nlu_modular=IntentClassification.NLUModular()
+nlu_modular= IntentClassification.NLUModular()
 slot_recognizers=slot_recognizer.SlotRecognizer()
 nlg_m=nlg_manager.NLGManager()
 

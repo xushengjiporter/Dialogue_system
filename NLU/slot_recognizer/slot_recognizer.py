@@ -4,11 +4,6 @@ import static_variables,re
 class SlotRecognizer:
     def __init__(self):
         pass
-        # self.replies_dict = initial_data.loading_replies()
-        # self.slot, self.sys_intent, self.usr_intent, self.ending_greeting, self.new_slot = initial_data.initial_variable()
-        # self.history = ".\history\\"
-        # self.policy_mapping = PolicyLearning.PolicyLearningMapping()
-
 
     def slot_recognizer(self,text,cf):
         ####recognize the slot keys
@@ -34,16 +29,12 @@ class SlotRecognizer:
                     if words in text:
                         slot_list.append(slots_keys)
                         break
-
-
-
-
         if len(slot_list)>0:
             return slot_list
         else:return False
 
 
-    def classify_failure(self,text):
+    def recognize_failure(self,text):
         #####recognize the slot value
 
         if ((text.find("制冷") != -1) | (text.find("冷风") != -1) | (text.find("凉风") != -1)):
@@ -59,17 +50,17 @@ class SlotRecognizer:
 
         return classfication
 
-    def classify_brand(self,text):
+    def recognize_brand(self,text):
         #####recognize the slot value
-
 
         if ((text.find("海信") != -1)):
             classfication = "海信"
         elif ((text.find("科龙") != -1)):
             classfication = "科龙"
+
         return classfication
 
-    def classify_version(self,text):
+    def recognize_version(self,text):
         #####recognize the slot value
 
 
@@ -81,8 +72,6 @@ class SlotRecognizer:
 
     def recognize_tele(self,text):
         #####recognize the slot value
-
-
         if len(re.findall(
                 r'[\u4E00-\u9FA5]*1((3[\d])|(4[75])|(5[^3|4])|(66)|(7[013678])|(8[\d])|(9[89]))\d{8}[\u4E00-\u9FA5]*',
                 text)) != 0:
@@ -92,8 +81,6 @@ class SlotRecognizer:
 
     def recognize_location(self,text):
         #####recognize the location value
-
-
         text = text[text.find("路") - 2:text.find("路") + 4]
         return text
 

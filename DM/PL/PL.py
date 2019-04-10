@@ -1,16 +1,12 @@
 import static_variables,collections
-
+from Util import data_cleaning
 class PolicyLearning:
     #####responsible for maintain the sys-replies
 
     def __init__(self):
-        self.sys_communicative_function=[]
-        self.sys_slot_keys=[]
-        self.sys_slot_values=[]
-
+        pass
 
     def ask_slot(self,slot_keys):
-
         if len(static_variables.REPLIES_DICT["need_ask_slot"])<2:
             sys_communicative_function, sys_slot_keys, sys_slot_values = [], [], []
             sys_communicative_function.append("inform")
@@ -37,34 +33,34 @@ class PolicyLearning:
 
         return cf_and_slot
 
-    def confirm_booking_maintenance_slot(self,slot_keys):
+    def generate_sys_cf_and_slot(self,slot_keys):
         sys_communicative_function, sys_slot_keys, sys_slot_values = [], [], []
 
         if (static_variables.NEW_SLOT[slot_keys] is True)&(len(static_variables.REPLIES_DICT["need_ask_slot"])>=2):
             sys_communicative_function.append("inform")
             sys_slot_keys.append("confirm")
-            sys_slot_values.append(None)
+            sys_slot_values.append(slot_keys)
             sys_communicative_function.append("request")
             sys_slot_keys.append(static_variables.REPLIES_DICT["need_ask_slot"][0])
             sys_slot_values.append(None)
         elif (static_variables.NEW_SLOT[slot_keys] is True)&(len(static_variables.REPLIES_DICT["need_ask_slot"])==1):
             sys_communicative_function.append("inform")
             sys_slot_keys.append("confirm")
-            sys_slot_values.append(None)
+            sys_slot_values.append(slot_keys)
             sys_communicative_function.append("inform_inform")
             sys_slot_keys.append("ending")
             sys_slot_values.append(None)
         elif (static_variables.NEW_SLOT[slot_keys] is False)&(len(static_variables.REPLIES_DICT["need_ask_slot"])>=2):
             sys_communicative_function.append("inform")
             sys_slot_keys.append("update")
-            sys_slot_values.append(None)
+            sys_slot_values.append(slot_keys)
             sys_communicative_function.append("request")
             sys_slot_keys.append(static_variables.REPLIES_DICT["need_ask_slot"][0])
             sys_slot_values.append(None)
         elif len(static_variables.REPLIES_DICT["need_ask_slot"])==1:
             sys_communicative_function.append("inform")
-            sys_slot_keys.append("update" + slot_keys)
-            sys_slot_values.append(None)
+            sys_slot_keys.append("update")
+            sys_slot_values.append(slot_keys)
         else:return False
 
         cf_and_slot=collections.OrderedDict()
@@ -75,30 +71,29 @@ class PolicyLearning:
         return cf_and_slot
 
     def ambiguous_process(self,text,cf_results):
-        #cf_and_slot_list = []
         d=[True for item in static_variables.REPLIES_DICT["trigger_ambiguous_time"] if item in text]
         if (len(d)>0)&(cf_results=="inform"):
             static_variables.SYS_INTENT.append("time")
             cf_and_slot = {"request": {"time": "ambiguous"}}
-            #cf_and_slot_list.append(cf_and_slot)
+            text = data_cleaning.clean_time_text(text=text)
+            static_variables.SLOT["time"] = text
             return cf_and_slot
-        elif cf_results=="deny":
-
-            if (static_variables.DENY_COUNT == 1):
+        elif (cf_results=="deny")&(static_variables.SYS_INTENT[-1]=="time"):
+            if static_variables.DENY_COUNT == 1:
                 static_variables.DENY_COUNT += 1
                 cf_and_slot = {"request": {"time": "format"}}
-                #cf_and_slot_list.append(cf_and_slot)
                 return cf_and_slot
-            elif (static_variables.DENY_COUNT == 2):
+            elif static_variables.DENY_COUNT == 2:
                 static_variables.DENY_COUNT += 1
                 cf_and_slot = {"inform": {"operator": None}}
-                #cf_and_slot_list.append(cf_and_slot)
                 return cf_and_slot
-            elif (static_variables.DENY_COUNT == 0):
+            elif static_variables.DENY_COUNT == 0:
                 static_variables.DENY_COUNT += 1
                 cf_and_slot = {"request": {"time": "again"}}
-                #cf_and_slot_list.append(cf_and_slot)
                 return cf_and_slot
+        elif(cf_results=="deny")&(static_variables.SYS_INTENT[-1]!="time"):
+            cf_and_slot = {"request": {static_variables.SYS_INTENT[-1]: "again"}}
+            return cf_and_slot
         else:
             return False
 
