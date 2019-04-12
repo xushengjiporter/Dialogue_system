@@ -19,6 +19,6 @@ def get_bot_response():
 if __name__ == "__main__":
 
     app.run(
-        host="10.18.23.88"
+        host="127.0.0.1"
 
     )
